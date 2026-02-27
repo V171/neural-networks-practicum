@@ -12,4 +12,3 @@
 - [PyTorch Tutorials](https://pytorch.org/tutorials/)
 - [Papers with Code](https://paperswithcode.com/)
 - [Hugging Face](https://huggingface.co/)
-

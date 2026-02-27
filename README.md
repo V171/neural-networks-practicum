@@ -1,122 +1,107 @@
-# Neural Networks Workshop
+# Neural Networks Practicum
 
-Практикум по нейронным сетям (50 академических часов)
+Практикум по нейронным сетям для студентов направления "Прикладная математика и информатика".
 
-**Авторы:** доц. А.А. Часовских, с.н.с. В.С. Половников
+## О курсе
 
-## Описание курса
+- **Объём:** 50 академических часов
+- **Формат:** 10 лабораторных работ
+- **Инструменты:** Google Colab + PyTorch
+- **Преподаватели:** д.ф.-м.н., профессор А.А. Часовских; к.ф.-м.н., с.н.с. В.С. Половников
 
-Данный курс предназначен для студентов старших курсов и аспирантов направления "Прикладная математика и информатика". Курс охватывает ключевые темы современного глубокого обучения: от базовых свёрточных сетей до диффузионных моделей.
+## Структура репозитория
 
-## Содержание
+```
+neural-networks-practicum/
+├── notebooks/        # Шаблоны ноутбуков для занятий
+├── solutions/        # Примеры решений (после дедлайнов)
+├── utils/            # Вспомогательные функции
+│   ├── training.py   # Функции обучения (train_epoch, validate_epoch)
+│   ├── visualization.py  # Визуализация (графики, предсказания)
+│   └── models.py     # Готовые архитектуры (SimpleCNN, ResNet18)
+└── docs/             # Документация (PDF практикума)
+```
+
+## Темы занятий
 
 | № | Тема | Часы |
 |---|------|------|
 | 1 | Введение в CNN. Процесс обучения в PyTorch | 5 |
 | 2 | Переобучение и регуляризация | 5 |
-| 3 | Transfer Learning: Feature Extraction vs Fine-tuning | 5 |
-| 4 | Оптимизация, Дистилляция и Mutual Learning | 5 |
+| 3 | Transfer Learning (Feature Extraction, Fine-tuning) | 5 |
+| 4 | Оптимизация, Дистилляция, Mutual Learning | 5 |
 | 5 | Детектирование объектов (YOLO) | 5 |
-| 6 | Трансформеры в компьютерном зрении (ViT) | 5 |
-| 7 | Автоэнкодеры (AE) и латентные пространства | 5 |
+| 6 | Vision Transformer (ViT) | 5 |
+| 7 | Автоэнкодеры (AE) | 5 |
 | 8 | Вариационные автоэнкодеры (VAE) | 5 |
 | 9 | Генеративно-состязательные сети (GAN) | 5 |
-| 10 | Диффузионные модели (DDPM / LDM) | 5 |
-
-**Итого:** 50 академических часов
-
-## Структура репозитория
-
-```
-neural-networks-workshop/
-├── README.md                           # Этот файл
-├── notebooks/                          # Jupyter Notebooks для занятий
-│   ├── 01_cnn_introduction.ipynb
-│   ├── 02_overfitting_regularization.ipynb
-│   ├── 03_transfer_learning.ipynb
-│   ├── 04_distillation_mutual_learning.ipynb
-│   ├── 05_yolo_detection.ipynb
-│   ├── 06_vision_transformer.ipynb
-│   ├── 07_autoencoder.ipynb
-│   ├── 08_vae.ipynb
-│   ├── 09_gan.ipynb
-│   └── 10_diffusion.ipynb
-├── solutions/                          # Решения домашних заданий
-├── scripts/                            # Вспомогательные скрипты
-│   ├── utils.py                        # Утилиты для обучения
-│   └── check_environment.py            # Проверка окружения
-├── docs/                               # Документация
-│   └── neural_networks_workshop.tex    # LaTeX версия практикума
-└── data/                               # Примеры данных
-```
+| 10 | Диффузионные модели | 5 |
 
 ## Быстрый старт
 
-### Вариант 1: Google Colab (рекомендуется)
-
-1. Откройте [Google Colab](https://colab.research.google.com/)
-2. Выберите **GitHub** → вставьте URL репозитория
-3. Откройте нужный ноутбук
-4. Установите runtime: **Runtime → Change runtime type → GPU T4**
-
-### Вариант 2: Локальный запуск
+### Клонирование репозитория
 
 ```bash
-# Клонирование репозитория
-git clone https://github.com/V171/neural-networks-workshop.git
-cd neural-networks-workshop
-
-# Создание виртуального окружения
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# venv\Scripts\activate   # Windows
-
-# Установка зависимостей
-pip install torch torchvision matplotlib scikit-learn tqdm
-pip install ultralytics  # для YOLO
-
-# Запуск Jupyter
-jupyter notebook notebooks/
+git clone https://github.com/V171/neural-networks-practicum.git
+cd neural-networks-practicum
 ```
 
-### Проверка окружения
+### Использование в Google Colab
+
+```python
+# Клонирование прямо в Colab
+!git clone https://github.com/V171/neural-networks-practicum.git
+
+# Импорт вспомогательных функций
+import sys
+sys.path.append('/content/neural-networks-practicum')
+from utils import train_epoch, validate_epoch, plot_training_curves
+```
+
+### Локальная работа
 
 ```bash
-python scripts/check_environment.py
+# Установка зависимостей
+pip install torch torchvision matplotlib tqdm
+
+# Запуск Jupyter
+jupyter notebook
+```
+
+## Использование utils
+
+```python
+from utils import train_epoch, validate_epoch, SimpleCNN, plot_training_curves
+
+# Создание модели
+model = SimpleCNN(in_channels=1, num_classes=10)
+
+# Обучение
+for epoch in range(num_epochs):
+    train_loss, train_acc = train_epoch(model, train_loader, criterion, optimizer, device)
+    val_loss, val_acc = validate_epoch(model, val_loader, criterion, device)
+
+# Визуализация
+plot_training_curves(history, save_path='training_curves.png')
 ```
 
 ## Требования
 
-- Python 3.9+
-- PyTorch 2.0+
-- Google аккаунт (для Colab)
-- GPU (T4 или выше рекомендуется)
+- Python 3.8+
+- PyTorch 1.12+
+- torchvision
+- matplotlib
+- tqdm
+- numpy
 
-## Датасеты
+## Полезные ссылки
 
-Все датасеты загружаются автоматически:
-- FashionMNIST (Занятия 1-2)
-- CIFAR-10 (Занятия 4, 6)
-- MNIST (Занятия 7, 10)
-- Hymenoptera (Занятие 3, с fallback на CIFAR-10)
-
-## Вклад в проект
-
-Приветствуются:
-- Сообщения об ошибках → [Issues](https://github.com/V171/neural-networks-workshop/issues)
-- Предложения по улучшению → [Pull Requests](https://github.com/V171/neural-networks-workshop/pulls)
-- Дополнительные примеры и решения
-
-## Лицензия
-
-Образовательные материалы. Использование разрешено в учебных целях.
-
-## Контакты
-
-Преподаватели:
-- доц. А.А. Часовских
-- с.н.с. В.С. Половников
+- [PyTorch Documentation](https://pytorch.org/docs/)
+- [PyTorch Tutorials](https://pytorch.org/tutorials/)
+- [Google Colab](https://colab.research.google.com/)
+- [Papers with Code](https://paperswithcode.com/)
+- [Hugging Face](https://huggingface.co/)
 
 ---
 
-**Spring 2026**
+*Москва, 2026*
