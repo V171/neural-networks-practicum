@@ -114,8 +114,7 @@ plot_training_curves(history, save_path='training_curves.png')
 
 ## Обратная связь
 
-- [Issues](https://github.com/V171/neural-networks-practicum/issues) — сообщения об ошибках, предложения
-- [Discussions](https://github.com/V171/neural-networks-practicum/discussions) — вопросы и обсуждения
+Нашли ошибку или есть предложение? Создайте [Issue](https://github.com/V171/neural-networks-practicum/issues).
 
 ---
 
